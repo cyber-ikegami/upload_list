@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const dirPath = 'C:/Users/ikegami/Desktop/テスト用';
+const dirPath = process.argv[2];
 const fileNameList = fs.readdirSync(dirPath);
 let fileName = "";
 for (let i = 0; i < fileNameList.length; i++) {
