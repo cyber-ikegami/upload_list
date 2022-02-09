@@ -1,4 +1,5 @@
-const path = require('path');
+const fs = require('fs');
 
-const fileName = path.basename('C:/Users/ikegami/Desktop/テスト用/テスト.txt');
+const dirPath = 'C:/Users/ikegami/Desktop/テスト用';
+const fileName = fs.readdirSync(dirPath);
 console.log(fileName);
