@@ -9,5 +9,6 @@ const fileNameList = fs.readdirSync(dirPath);
 fileNameList.forEach(fileName => {
     const excelData = xlsx.readFile(`${dirPath}/${fileName}`);
     const sheetName = excelData.SheetNames;
-    console.log(`ファイル名：${fileName}、機能名：${sheetName}`);
+    const funcName = sheetName[0].replace('フォーマット', '');
+    console.log(`ファイル名：${fileName}、機能名：${funcName}`);
 });
