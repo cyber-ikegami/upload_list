@@ -17,15 +17,24 @@ fileNameList.forEach(fileName => {
     let itemList = new Array();
     let i = 3;
 
-    const sheet2 = excelData.Sheets[sheetName[1]];
-    while (true) {
-        const cellNum = `B${i}`;
-        if (sheet2[cellNum] == undefined) {
-            break;
+    // エラーチェック(シート数の確認)
+    if (sheetName.length <= 1) {
+        itemList.push('エラー：シートが1つしか存在しません。');
+    } else {
+        const itemSheet = excelData.Sheets['入力データ項目'];
+        while (true) {
+            const cellNum = `B${i}`;
+            if (itemSheet[cellNum] == undefined) {
+                break;
+            }
+            const itemName = itemSheet[cellNum].v;
+            itemList.push(`・${itemName}\n`);
+            i++;
         }
-        const itemName = sheet2[cellNum].v;
-        itemList.push(`・${itemName}\n`);
-        i++;
+        // エラーチェック(入力データ項目のフォーマットの確認)
+        if (itemList.length == 0) {
+            itemList.push('エラー：フォーマットが違います。');
+        }
     }
 
     console.log(`★ファイル名：${fileName}、機能名：${funcName}
