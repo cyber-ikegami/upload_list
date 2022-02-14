@@ -1,14 +1,29 @@
 const fs = require('fs');
 const xlsx = require('xlsx');
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
 const ITEM_START_NUM = 3;
 
 // パス
-const dirPath = process.argv[2];
+let dirPath = process.argv[2];
+
+while (dirPath == null) {
+// if (dirPath == null) {
+    readline.message('ディレクトリを指定してください：', (dir: string) => {
+        dirPath = dir;
+        readline.close();
+      });
+    // console.log('ディレクトリを指定してください：');
+    // dirPath = 'C:/Users/ikegami/Desktop/テスト用';
+}
+
 // ファイル名の配列
 const fileNameList = fs.readdirSync(dirPath);
 
-fileNameList.forEach((fileName : string) => {
+fileNameList.forEach((fileName: string) => {
     // エクセルデータ
     const excelData = xlsx.readFile(`${dirPath}/${fileName}`);
     // シート名
@@ -26,7 +41,7 @@ fileNameList.forEach((fileName : string) => {
         errorMessageList.push('エラー：シートが1つしか存在しません。');
     } else {
         const itemSheet = excelData.Sheets['入力データ項目'];
-        for (let i = ITEM_START_NUM; ; i++){
+        for (let i = ITEM_START_NUM; ; i++) {
             const cellNum = `B${i}`;
             if (itemSheet[cellNum] == undefined) {
                 break;
